@@ -1,0 +1,22 @@
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Skill group add</h4>
+    <button type="button" class="close" aria-label="Ok" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+
+    <label class="EnterTheSkill">Enter the skill group</label>
+    <input type="text" [(ngModel)] = "skillGroup">
+    <label class="discription">Discription</label>
+    <input type="text" [(ngModel)] = "skillGroupDiscription">
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="c('Save click')">Save</button>
+  </div>
+</ng-template>
+
+<button class="btn btn-lg btn-outline-primary" (click)="open(content)">Add skill group</button>
+

@@ -1,0 +1,30 @@
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Skill update</h4>
+    <button type="button" class="close" aria-label="Ok" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <label class="selSkill">Enter the skill name</label>
+    <input type="text" [(ngModel)] = "skill[3].name">
+    <label class="selSkillDesc">Skill description</label>
+    <input type="text"[(ngModel)] = "skill[3].description">
+
+    <label class="skillGroup">Select or add skill group</label>
+    <select class="select-skill-group" [(ngModel)] = "selectedSkillGroup" (change)="setSG($event)">
+      <option *ngFor="let sg of skillGroup" [value]="sg.id">
+        {{sg.name}}
+      </option>
+    </select>
+
+    <app-add-skill-group></app-add-skill-group>
+
+  </div>
+  <button type="button" class="btn btn-outline-dark" (click)="c('Save click')">Save</button>
+
+</ng-template>
+
+<button class="updateSkill" (click)="open(content)">Update</button>
+<!--class="btn btn-lg btn-outline-primary"-->
+

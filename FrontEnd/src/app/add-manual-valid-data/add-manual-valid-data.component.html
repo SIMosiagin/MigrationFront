@@ -1,0 +1,20 @@
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Profile update</h4>
+    <button type="button" class="close" aria-label="Ok" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+
+    <label class="discription">Enter the text manual validation</label>
+    <textarea  class="addManualVal" type="text" [(ngModel)] = "sqlText"
+               placeholder='SELECT TT.id, TT.row_number, TT."myField" FROM "myTable" TT WHERE TT."myField" is null AND TT.isvalid = true"  class="addManualVal' >
+    </textarea>
+
+  </div>
+  <button type="button"  (click)="c('Save click')">Save</button>
+  <!--class="btn btn-outline-dark"-->
+</ng-template>
+
+<button class="btn btn-lg btn-outline-primary" (click)="open(content)">Add manual validation data</button>

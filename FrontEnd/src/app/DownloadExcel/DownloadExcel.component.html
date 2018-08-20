@@ -1,0 +1,201 @@
+<div class="downloadExcel">
+
+  <div *ngIf="notDone; then thenBlockNotDone else elseBlockNotDone"></div>
+  <ng-template #thenBlockNotDone>
+
+  <div *ngIf="valid; then thenBlockValid else elseBlockValid"></div>
+  <ng-template #thenBlockValid>
+
+  <div *ngIf="mapFields; then thenBlockMapField else elseBlockMapField"></div>
+    <ng-template #thenBlockMapField>
+
+  <div *ngIf="mappeingTag; then thenBlockMap else elseBlockMap"></div>
+        <ng-template #thenBlockMap>
+
+          <div *ngIf="condition; then thenBlock else elseBlock"></div>
+            <ng-template #thenBlock>
+              <title>Отправка файла на сервер</title>
+              <input type="file" (change)="onFileSelected($event)">
+              <button type="button" (click)="onDownload()">Download</button>
+              <input type="file" class="inputFolder" webkitdirectory="">
+            </ng-template>
+            <ng-template #elseBlock>
+
+              <div class="col-md-6">
+               <h2>Selected file {{selectedFile.name}}</h2>
+                <table class="table table-striped">
+                 <thead>
+                 <tr>
+                  <th class="hidden">Id</th>
+                    <th>Name</th>
+                    <th>Action</th>
+                 </tr>
+                  </thead>
+                    <tbody>
+                      <tr *ngFor="let sheet of sheets">
+                        <td class="hidden">{{sheet.id}}</td>
+                        <td>{{sheet.name}}</td>
+                       <td><button class="btn btn-danger" (click)="onSelectSheet(sheet)"> Select sheet</button></td>
+                      </tr>
+                    </tbody>
+                </table>
+              </div>
+
+            </ng-template>
+          </ng-template>
+
+  <ng-template #elseBlockMap>
+
+    <div class="mappingtest">
+      <label class="mappingSkills">Maping skills</label>
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th hidden>ID</th>
+
+          <th>Excel skill group</th>
+          <th>Excel skill</th>
+
+          <th>DB skill group</th>
+          <!--<th>DB skill group description </th>-->
+
+          <th>DB skill</th>
+          <th>DB skill description</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let map of mappingColumns" [ngClass]="{'markRowSkillsRed': map[3].name == null}">
+          <!--[ngClass]="{'markRowSkillsRed': map[3]== null}"-->
+            <td hidden>{{map[0]}}</td>
+            <td >{{map[2]}}</td>
+            <td >{{map[1]}}</td>
+            <td >{{map[3].skillGroup.name}}</td>
+            <!--<td >{{map[3].skillGroup.description}}</td>-->
+            <td >{{map[3].name}}</td>
+            <td >{{map[3].description}}</td>
+
+            <!--<td  *ngIf="map[1] !== ''"><input  [(ngModel)] = "map[1]">-->
+            <!--<td  *ngIf="map[1] === ''">{{skill[0]}} </td>-->
+            <!--<td  *ngIf="ancorForSkill">{{map[1]}} = {{skill[0]}} </td>-->
+
+
+          <!--<button (click)="TTT(map)">TTT</button>-->
+          <!--<button type="button" (click)="OnClick($event)" > somebtn-->
+            <!--<ng-template *ngIf="map[6] !== 'true' ">-->
+
+            <!--<ng-template #thenBlockMapSkill>-->
+              <app-add-skill
+                [skill]="map"
+                [skillGroup]="skillGroup"></app-add-skill>
+          <button class="removeSkill" (click)="revomeSkill(map)">Remove</button>
+            <!--</ng-template>-->
+            <!--</ng-template>-->
+
+        </tr>
+        </tbody>
+      </table>
+
+      <button (click)="returnMappingSkills()">Upload skills</button>
+      <br><button (click)="makeMapSkill()">Make map skill</button>
+    </div>
+
+  </ng-template>
+  </ng-template>
+
+    <ng-template #elseBlockMapField>
+
+      <ngForm class="mappingtest">
+        <label class="mappingSkills">Maping fields</label>
+
+        <ngForm>
+          <br> <label class="selected-table" [ngClass]="{'markOnTTable': markOnTTable}">Selected table {{transinTable}}</label>
+          <select class="select-transit-table" (change)="setTT($event)">
+            <option value="" disabled>Choose table</option>
+           <option *ngFor="let tt of transitTables" [value]="tt.name_table">
+             {{tt.name_table}}
+            </option>
+          </select>
+          <app-transit-table></app-transit-table>
+        </ngForm>
+
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th >Id</th>
+            <th >Excel skill group</th>
+            <th >Excel skill</th>
+            <th >Table field</th>
+            <th >Lenght</th>
+
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let mapF of mappingFields">
+            <td >{{mapF[0]}}</td>
+            <td >{{mapF[4]}}</td>
+            <td >{{mapF[1]}}</td>
+
+            <td><input type="text"  (change)="setMapField($event, mapF)" [value]="mapF[2]"></td>
+            <td><input [max]="4000" [min]="3" type="number"(change)="setMapFieldLenght($event, mapF)" [value]="mapF[3]"></td>
+
+          </tr>
+          </tbody>
+        </table>
+
+        <button (click)="uploadFieldMapWithOutValidation()">Upload fieldmap withont validation</button>
+        <button (click)="validation()">Validation</button>
+      </ngForm>
+
+  </ng-template>
+  </ng-template>
+  <ng-template #elseBlockValid>
+    <ngForm>
+      <label class="validation">Validation</label>
+      <br><label class="pathReport">Choose path for report.</label>
+      <br><input type="text" placeholder="for example: D:\NC\MyReportName" (change)="setPathReport($event)">
+
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <!--<th >Id</th>-->
+          <th >Table</th>
+          <th >Field</th>
+          <th >Validation</th>
+          <th >Validation type</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let FWV of fieldsWithValid">
+          <td >{{FWV.table}}</td>
+          <td >{{FWV.field}}</td>
+          <td >{{FWV.validation}}</td>
+          <td >{{FWV.validationType}}</td>
+          <button (click)="delValidation($event,FWV)" [value]="FWV">Del</button>
+
+        </tr>
+        </tbody>
+      </table>
+
+      <app-add-validation [Excel]="selectedSheet" [fields]="fields" [manualValid]="manualValidation" [systemValid]="valType" ></app-add-validation>
+
+
+      <br><button (click)="doValidation()">Execute</button>
+
+      <br><button (click)="uploadData()">Upload</button>
+
+    </ngForm>
+
+  </ng-template>
+  </ng-template>
+  <ng-template #elseBlockNotDone>
+    <label class="notDone">Done.</label>
+  </ng-template>
+
+
+  <!--<a href="D:\NC\Report upload.xlsx">Excel</a>-->
+  <!--<link href="D:\NC\Report upload.xlsx">-->
+  <!--<app-add-manual-valid-data></app-add-manual-valid-data>-->
+
+</div>

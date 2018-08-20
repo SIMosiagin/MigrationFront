@@ -1,0 +1,33 @@
+.isField {
+  display: inherit;
+}
+
+.isExcel {
+  display: inherit;
+  font-size: 14px;
+  color: black;
+}
+
+.isTypeVal {
+  display: inherit;
+}
+
+.isSystemType {
+  display: inherit;
+}
+
+.isManualType {
+  display: inherit;
+}
+
+.isSystemType{
+  display: inherit;
+}
+
+.isManualType{
+  display: inherit;
+}
+
+.selVal {
+  display: inherit;
+}

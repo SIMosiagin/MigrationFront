@@ -1,0 +1,57 @@
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Profile update</h4>
+    <button type="button" class="close" aria-label="Ok" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <button (click)="forField()">For field</button>
+    <button (click)="forExcel()">For table</button>
+       <select [ngClass]="{'isField': isField}" aria-hidden="true"  (change)="changefield($event)">
+         <option value="" disabled>Choose field</option>
+        <option *ngFor="let f of fields" [value]="f.xlsxField">
+          {{f.xlsxField}}
+        </option>
+       </select>
+    <!--<label [ngClass] = "{'isExcel':isExcel}" aria-hidden="true">{{Excel}}</label>-->
+
+    <select [ngClass]="{'isTypeVal': isTypeVal}" aria-hidden="true" (change)="selectedType($event)" >
+      <option value="" disabled>Choose type validation</option>
+      <option *ngFor="let tv of typeValid" [value]="tv.name">
+        {{tv.name}}
+      </option>
+    </select>
+
+    <label [ngClass] = "{'selVal':selVal}" aria-hidden="true">Select validation</label>
+
+    <select [ngClass]="{'isSystemType': isSystemType}" aria-hidden="true" (change)="selectedSystem($event)">
+      <option value="" disabled>Choose validation</option>
+      <option *ngFor="let sv of systemValid" [value]="sv.typeName">
+        {{sv.typeName}}
+      </option>
+    </select>
+
+    <select [ngClass]="{'isManualType': isManualType}" aria-hidden="true" (change)="selectedManual($event)">
+      <option value="" disabled>Choose validation</option>
+      <option *ngFor="let mv of manualValid" [value]="mv.sqlText">
+        {{mv.sqlText}}
+      </option>
+    </select>
+    <ng-template *ngIf="isManualType; then thenAddManualVal"></ng-template>
+    <ng-template #thenAddManualVal>
+      <app-add-manual-valid-data></app-add-manual-valid-data>
+    </ng-template>
+
+
+
+
+
+
+
+  </div>
+  <button type="button" class="btn btn-outline-dark" (click)="c('Save click')">Save</button>
+
+</ng-template>
+
+<button class="btn btn-lg btn-outline-primary" (click)="open(content)">Add validation</button>
